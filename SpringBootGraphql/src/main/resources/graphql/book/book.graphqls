@@ -1,0 +1,20 @@
+type Book {
+  id: ID
+  name: String
+  pageCount: Int
+  author: Author
+}
+
+type Author {
+  id: ID
+  firstName: String
+  lastName: String
+}
+
+#An input type is defined with a keyword input instead of type as:
+input BookInput {
+    name : String
+    pageCount: Int
+    authorFName: String
+    authorLName: String
+}

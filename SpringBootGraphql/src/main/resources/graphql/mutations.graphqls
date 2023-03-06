@@ -1,0 +1,9 @@
+type Mutation {
+    addBook(name: String!, pageCount: Int, authorFName: String!, authorLName: String!) : Book!
+    updateBook(id: ID!, pageCount: Int, authorFName: String!, authorLName: String!): Book!
+    deleteBook(id: ID!): Book!
+
+    # Instead of defining the API with scalar arguments, for example – addBook(name: String!, pageCount: Int, authorFName: String!, authorLName: String!),
+    # you can define a complex object called input type. This is useful if you want to reuse the input type for both updates and inserts.
+    addBookWithInput(book: BookInput!) : Book!
+}

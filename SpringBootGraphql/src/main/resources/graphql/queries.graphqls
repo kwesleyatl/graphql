@@ -1,0 +1,9 @@
+type Query {
+    bookById(id: ID): Book
+    bookByName(name: String): Book
+
+    greeting: String
+    artifactRepositories : [ArtifactRepository]
+    artifactRepository(id : ID!) : ArtifactRepository
+    project(slug: ID!): Project
+}
