@@ -1,0 +1,16 @@
+type Account {
+    accountId: String
+    accountNumber: Int
+    accountStatus: AccountStatus
+    accountBalance: Float
+}
+
+input AccountInput {
+    accountNumber: Int
+    accountStatus: AccountStatus
+    accountBalance: Float
+}
+
+enum AccountStatus {
+    Active, Inactive, Closed
+}

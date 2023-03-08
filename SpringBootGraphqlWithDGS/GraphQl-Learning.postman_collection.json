@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "a25b483b-e38f-46dc-87fc-22f7db57bed8",
+		"name": "GraphQl-Learning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2510876"
+	},
+	"item": [
+		{
+			"name": "Get Books By Id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query bookDetails {\n  bookById(id: \"book-4\") {\n  #bookById(id: $id) {\n    id\n    name\n    pageCount\n    author {\n      id\n      firstName\n      lastName\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books By Name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query bookDetails {\n  bookByName(name: \"Interview with the vampire\") {\n  #bookById(id: $id) {\n    id\n    name\n    pageCount\n    author {\n      #id\n      firstName\n      #lastName\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query projectBySlug {\n  project(slug: \"1\") {\n  #bookById(id: $id) {\n    slug\n    name\n    repositoryUrl\n    status\n    releases (limit: 2) {\n        version\n        status\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects Using GraphQL Aliases",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query projectBySlug {\n  project(slug: \"1\") {\n  #bookById(id: $id) {\n    slug\n    name\n    repositoryUrl\n    status\n    product_releases: releases {\n        version\n        status\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects Using GraphQL Meta Props",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query projectBySlug {\n__typename\n    ... on Project {\n      name\n    }    \n  project(slug: \"1\") {\n  #bookById(id: $id) {\n    slug\n    name\n    repositoryUrl\n    status\n    product_releases: releases {\n        version\n        status\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Graphql Schema - Introspection __Schema",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  __schema {\n    types {\n      name\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Graphql Schema - Introspection __Type",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  __type(name: \"Project\") {\n    name\n    kind\n    fields {\n      name\n      type {\n        name\n        kind\n        ofType {\n          name\n          kind\n        }        \n      }\n    }\n  }\n}\n\n# id looks a bit weird there, it has no name for the type. That's because it's a \"wrapper\" type of kind NON_NULL. If we queried for ofType on that field's type, we would find the ID type there, telling us that this is a non-null ID.",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects And Books - Mul calls as one Ops",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query projectBySlug {\n  project(slug: \"1\") {\n    slug\n    name\n    repositoryUrl\n    status\n    releases {\n        version\n        status\n    }\n  }\n  bookById(id: \"book-2\") {\n    id\n    name\n    pageCount\n    author {\n      id\n      firstName\n      lastName\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createBook(\n    $name: String!, \n    $pageCount: Int,\n    $authorFName: String!,\n    $authorLName: String!) {\n  addBook(name: $name, pageCount: $pageCount, authorFName: $authorFName, authorLName: $authorLName) {\n    id\n    name\n    pageCount\n    author {\n      id\n      firstName\n      lastName\n    }\n  }\n}",
+						"variables": "{\n    \"name\": \"Learn GraphQL with SB - p1\",\n    \"pageCount\": 40,\n    \"authorFName\": \"Buland\",\n    \"authorLName\": \"Malik\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book With Josn Object",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation __addBookWithInput($book: BookInput!) {\n  addBookWithInput( book: $book) {\n    id\n    name\n    pageCount\n    author {\n      id\n      firstName\n      lastName\n    }\n  }\n}",
+						"variables": "{\n    \"book\": {\n        \"name\": \"Learn GraphQL Part2\",\n        \"pageCount\": 140,\n        \"authorFName\": \"Hani\",\n        \"authorLName\": \"Buland\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Book",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation updateBook(\n    $id: ID!,\n    #$name: String!, \n    $pageCount: Int,\n    $authorFName: String!,\n    $authorLName: String!) {\n  updateBook(\n    id: $id, \n    #name: $name, \n    pageCount: $pageCount, \n    authorFName: $authorFName, \n    authorLName: $authorLName) {\n    id\n    name\n    pageCount\n    author {\n      id\n      firstName\n      lastName\n    }\n  }\n}",
+						"variables": "{\n    \"id\": \"book-1\",\n    \"name\": \"Learn GraphQL Part1\",\n    \"pageCount\": 120,\n    \"authorFName\": \"Buland A\",\n    \"authorLName\": \"Malik\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Albums",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query albums {\n  albums(titleFilter: \"Rumours\") {\n    title\n    artist\n    recordNo\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9993/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9993",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query customers{\n  customers{\n    contact\n    mail\n    accounts{\n        accountNumber\n        accountStatus\n        accountBalance\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9993/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9993",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation customer($customerInput: CustomerInput){\n  customer(customerInput: $customerInput){\n    contact\n    mail\n    accounts{\n        accountNumber\n    }\n  }\n}",
+						"variables": "{\n    \"customerInput\":{\n        \"name\": \"Buland Malik\",\n        \"gender\": \"M\",\n        \"contact\": 4088062,\n        \"mail\": \"b@gmail.com\",\n        \"accounts\": [{\n            \"accountNumber\": 1,\n            \"accountStatus\": \"Active\",\n            \"accountBalance\": 1000.56\n        },\n        {\n            \"accountNumber\": 2,\n            \"accountStatus\": \"Active\",\n            \"accountBalance\": 100011.56\n        }]\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9993/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9993",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

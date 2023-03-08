@@ -1,5 +1,7 @@
 # GraphQL 101
 
+GraphQL was created in 2012 by Facebook and was open-sourced in 2015. It solves an important problem of getting only needed data from one place rather than making requests to multiple microservices and getting tons of unwanted data in response. It is very useful for network and performance-constrained environments like mobile devices.
+
 GraphQL is often explained as a “unified interface to access data from different sources”. Although this explanation is accurate, it doesn’t reveal the underlying ideas or the motivation behind GraphQL, or even why it is called “GraphQL” — you can see the stars and the night, but not quite the “The Starry Night”.
 
 The true heart of GraphQL lies in what I think of as the application data graph. In this article, I’ll introduce the app data graph, talk about how GraphQL queries operate on the app data graph and how we can cache GraphQL query results by exploiting their tree structure.

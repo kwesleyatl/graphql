@@ -1,0 +1,54 @@
+dgs:
+  graphql:
+    schema-locations:
+      - ${classpath*:schemas/**/*.graphql*}
+
+## Server port
+server:
+  port: 9993
+#  servlet:
+#    context-path: /graphql
+
+## H2 Configuration
+spring:
+  output:
+    ansi:
+      enabled: DETECT #If your terminal supports ANSI, the color output will be used to aid readability. You can set spring.output.ansi.enabled value to either ALWAYS, NEVER or DETECT.
+  h2:
+    console:
+      enabled: true #H2 database has an embedded GUI console for browsing the contents of a database and running SQL queries. By default, the H2 console is not enabled in Spring.
+      path: /h2-console
+      settings:
+        trace: false #we set spring.h2.console.settings.trace to false to prevent trace output
+        web-allow-others: false #we can also disable remote access by setting spring.h2.console.settings.web-allow-others to false.
+  datasource:
+    #url: jdbc:h2:mem:srs-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    #url=jdbc:h2:file:/data/demo: #By design, the in-memory database is volatile, and results in data loss after application restart. We can change that behavior by using file-based storage.
+    url: jdbc:h2:mem:mydb
+    username: admin
+    password: pass
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        #dialect: com.buland.graphql.netflixdgs.springboot.dialect.MyH2Dialect
+        use_sql_comments: true
+        format_sql: true
+        globally_quoted_identifiers: true
+  #sql.init.data-locations=data-h2: data-h2.sql #script to load db
+
+logging:
+  #file: /logs/application-debug.log
+  #pattern:
+    #console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    #file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

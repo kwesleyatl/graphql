@@ -1,0 +1,5 @@
+type Album {
+    title: String
+    artist: String
+    recordNo: Int
+}
