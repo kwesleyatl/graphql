@@ -1,3 +1,6 @@
+"""An ISO-8601 encoded UTC date string with millisecond precision (YYYY-MM-DDThh:mm:ss.mmmZ), e.g. '2021-08-26T23:18:50.870Z'"""
+scalar DateTime
+
 type Query {
     albums(titleFilter: String): [Album]
 

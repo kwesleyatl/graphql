@@ -1,0 +1,37 @@
+input SearchInput  {
+    metricName: String!
+    absoluteDateRangeStart: DateTime
+    absoluteDateRangeEnd: DateTime
+    relativeDataRange: RelativeDateRange
+    fields: [FieldInput]
+}
+
+"""Filtering fields such as ID, subscriberID, storeID etc """
+input FieldInput {
+    key: String
+    value: String
+}
+
+enum Dimension {
+    DOLLAR
+    PERCENTAGE
+    COUNT
+}
+
+type Metric {
+    name: String
+    dimension: Dimension
+    value: Int
+}
+
+enum RelativeDateRange {
+    LAST_7_DAYS
+    LAST_30_DAYS
+    LAST_60_DAYS
+    LAST_90_DAYS
+    LAST_360_DAYS
+}
+
+extend type Query {
+    retrieveMetrics(criteria: SearchInput): [Metric]!
+}

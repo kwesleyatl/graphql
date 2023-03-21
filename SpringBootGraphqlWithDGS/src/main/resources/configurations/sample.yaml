@@ -1,0 +1,22 @@
+metrics:
+  net_revenue:
+    configurator: com.buland.graphql.netflixdgs.springboot.config.ESConfigurator
+    datasource: es_index_datasource
+    location: entities/Order.total
+  attributed_unique_buyer_count:
+      datasource: es_index_datasource
+      location: entities/Order
+
+datasource:
+  es_index_datasource:
+      type: ESDataFetcher
+      credentials:
+        region: {es.idx.region}
+        password: {es.idx.password}
+        host: {es.idx.host}
+    mysql_1:
+      type: MySQLDataFetcher
+      credentials:
+        user_name: { mysql.name }
+        password: { mysql.password }
+        host: { mysql.host }
